@@ -18,4 +18,8 @@ module.exports = {
   getWardsByCode: (wardCode) => wards.find(x => x.code == wardCode),
   getCityByCode: (cityCode) => provinces.find(x => x.code == cityCode),
   getDistrictByCode: (districtCode) => districts.find(x => x.code == districtCode),
+  //update feature getCodeByName
+  getCodeByDistrict: (districtName) => districts.find((x) => x.name.includes(districtName)),
+  getCodeByWard: (wardName) => wards.find((x) => x.name.includes(wardName)),
+  getCodeProvince: (provinceName) => provinces.find((x) => x.name.includes(provinceName)),
 };
