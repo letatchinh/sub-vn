@@ -21,6 +21,31 @@ function stringToSlug(str) {
 
   return str;
 }
+// convert wards
+const arr = [...wards];
+const temp = {};
+let nameProcvince = [];
+arr.forEach((e) => {
+  const convertName = stringToSlug(e.province_name);
+  if (!temp[convertName]) {
+    temp[convertName] = [];
+    nameProcvince.push(convertName);
+  }
+  temp[convertName].push(e);
+});
+
+// convert district
+const arrDistrict = [...districts];
+const tempDistrict = {};
+let nameDistrict = [];
+arrDistrict.forEach((e) => {
+  const convertName = stringToSlug(e.province_name);
+  if (!tempDistrict[convertName]) {
+    tempDistrict[convertName] = [];
+    nameDistrict.push(convertName);
+  }
+  tempDistrict[convertName].push(e);
+});
 
 module.exports = {
   getAreas: () => areas,
@@ -37,7 +62,7 @@ module.exports = {
   getCityByCode: (cityCode) => provinces.find((x) => x.code == cityCode),
   getDistrictByCode: (districtCode) => districts.find((x) => x.code == districtCode),
   //update feature getCodeByName
-  getCodeByDistrict: (districtName, provinceName) => districts.find((x) => stringToSlug(x.name).includes(stringToSlug(districtName)) && stringToSlug(x.province_name).includes(stringToSlug(provinceName))),
-  getCodeByWard: (ward, district, city) => wards.find((x) => stringToSlug(x.name).includes(stringToSlug(ward)) && stringToSlug(x.district_name).includes(stringToSlug(district)) && stringToSlug(x.province_name).includes(stringToSlug(city))),
+  getCodeByDistrict: (districtName, provinceName) => tempDistrict[nameDistrict.find((aa) => aa.includes(stringToSlug(provinceName)))].find((x) => x.name.includes(stringToSlug(districtName))),
+  getCodeByWard: (ward, city) => temp[nameProcvince.find((aa) => aa.includes(stringToSlug(city)))].find((x) => x.name.includes(stringToSlug(ward))),
   getCodeProvince: (provinceName) => provinces.find((x) => stringToSlug(x.name).includes(stringToSlug(provinceName))),
 };
